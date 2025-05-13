@@ -1,6 +1,7 @@
 import React from "react";
 import Banner from "./components/banner.js"; // Adjust path as needed
 import PokemonEntry from "./components/entry.js";
+import PokemonSearchAxios from "./components/input";
 function App() {
   
   return (
@@ -9,7 +10,7 @@ function App() {
       <div className="pokedex-grid">
         <entry /> {/* Test empty state */}
       </div>
-
+     
       <PokemonEntry/>
     </div>
   );

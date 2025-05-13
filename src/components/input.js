@@ -1,37 +1,33 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function PokemonSearchFetch() {
-  const [pokemonNameInput, setPokemonNameInput] = useState(''); // For the input field
-  const [pokemonToSearch, setPokemonToSearch] = useState(''); // Pokemon name/ID to actually search
+function PokemonSearchAxios() {
+  const [pokemonNameInput, setPokemonNameInput] = useState('');
+  const [pokemonToSearch, setPokemonToSearch] = useState('');
   const [pokemonData, setPokemonData] = useState(null);
-  const [loading, setLoading] = useState(false); // Initially not loading
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // This useEffect will run whenever 'pokemonToSearch' changes and is not empty
   useEffect(() => {
     if (!pokemonToSearch) {
-      setPokemonData(null); // Clear data if search term is cleared
+      setPokemonData(null);
       return;
     }
 
     const fetchPokemonData = async () => {
       setLoading(true);
       setError(null);
-      setPokemonData(null); // Clear previous data before new search
+      setPokemonData(null);
 
       try {
-        // Ensure the input is lowercase as PokeAPI names are typically lowercase
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonToSearch.toLowerCase()}`);
-        if (!response.ok) {
-          if (response.status === 404) {
-            throw new Error(`Pokemon "${pokemonToSearch}" not found.`);
-          }
-          throw new Error(`HTTP error! status: ${response.status}`);
+        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonToSearch.toLowerCase()}`);
+        setPokemonData(response.data);
+      } catch (err) {
+        if (err.response && err.response.status === 404) {
+          setError(`Pokemon "${pokemonToSearch}" not found.`);
+        } else {
+          setError(err.message);
         }
-        const data = await response.json();
-        setPokemonData(data);
-      } catch (error) {
-        setError(error.message);
         setPokemonData(null);
       } finally {
         setLoading(false);
@@ -39,20 +35,20 @@ function PokemonSearchFetch() {
     };
 
     fetchPokemonData();
-  }, [pokemonToSearch]); // Re-run effect when pokemonToSearch changes
+  }, [pokemonToSearch]);
 
   const handleInputChange = (event) => {
     setPokemonNameInput(event.target.value);
   };
 
   const handleSearch = (event) => {
-    event.preventDefault(); // Prevent form submission from reloading the page
+    event.preventDefault();
     if (pokemonNameInput.trim()) {
         setPokemonToSearch(pokemonNameInput.trim());
     } else {
         setError("Please enter a Pokémon name or ID.");
         setPokemonData(null);
-        setPokemonToSearch(''); // Clear any previous search term
+        setPokemonToSearch('');
     }
   };
 
@@ -75,7 +71,7 @@ function PokemonSearchFetch() {
         <div>
           <h1>{pokemonData.name.charAt(0).toUpperCase() + pokemonData.name.slice(1)}</h1>
           {pokemonData.sprites && pokemonData.sprites.front_default && (
-            <img src={pokemonData.sprites.front_default} alt={`Sprite of ${pokemonData.name}`} />
+             <img src={pokemonData.sprites.front_default} alt={`Sprite of ${pokemonData.name}`} />
           )}
           <h2>Abilities:</h2>
           <ul>
@@ -99,4 +95,4 @@ function PokemonSearchFetch() {
   );
 }
 
-export default PokemonSearchFetch;
+export default PokemonSearchAxios;
