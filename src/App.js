@@ -1,6 +1,6 @@
 import React from "react";
 import Banner from "./components/banner.js"; // Adjust path as needed
-
+import PokemonEntry from "./components/entry.js";
 function App() {
   const bulbasaurData = {
     id: 1,
@@ -46,12 +46,14 @@ function App() {
     <div className="App">
       <h1>My Pokedex</h1>
       <div className="pokedex-grid">
-        <PokemonEntry pokemon={bulbasaurData} />
-        <PokemonEntry pokemon={charmanderData} />
-        <PokemonEntry pokemon={pikachuData} />
-        <PokemonEntry pokemon={missingDataPokemon} />
-        <PokemonEntry /> {/* Test empty state */}
+        <entry pokemon={bulbasaurData} />
+        <entry pokemon={charmanderData} />
+        <entry pokemon={pikachuData} />
+        <entry pokemon={missingDataPokemon} />
+        <entry /> {/* Test empty state */}
       </div>
+
+      <PokemonEntry/>
     </div>
   );
 }

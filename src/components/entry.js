@@ -1,7 +1,7 @@
 // src/components/PokemonEntry.js
 import React from 'react';
 import PropTypes from 'prop-types';
-import './PokemonEntry.css'; // We'll create this for styling
+import './pokemonEntry.css'; // We'll create this for styling
 
 const PokemonEntry = ({ pokemon }) => {
   if (!pokemon) {
