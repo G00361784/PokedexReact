@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './PokemonSearch.css'; 
 
 function PokemonSearchAxios() {
   const [pokemonNameInput, setPokemonNameInput] = useState('');
@@ -52,8 +53,9 @@ function PokemonSearchAxios() {
     }
   };
 
+  // Add the class name to the root div
   return (
-    <div>
+    <div className="pokemon-search-container"> {/* <--- Added class here */}
       <form onSubmit={handleSearch}>
         <input
           type="text"
@@ -64,12 +66,14 @@ function PokemonSearchAxios() {
         <button type="submit">Search</button>
       </form>
 
-      {loading && <p>Loading Pokémon information...</p>}
-      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-      
+      {/* Added class names for messages */}
+      {loading && <p className="loading-message">Loading Pokémon information...</p>}
+      {error && <p className="error-message">Error: {error}</p>}
+
+      {/* Added a wrapper div with class for data */}
       {pokemonData && (
-        <div>
-          <h1>{pokemonData.name.charAt(0).toUpperCase() + pokemonData.name.slice(1)}</h1>
+        <div className="pokemon-data">
+          <h1>{pokemonData.name}</h1> {/* Capitalization can be done in JS or CSS text-transform */}
           {pokemonData.sprites && pokemonData.sprites.front_default && (
              <img src={pokemonData.sprites.front_default} alt={`Sprite of ${pokemonData.name}`} />
           )}

@@ -9,3 +9,143 @@
   justify-content: center;
   gap: 16px; /* Optional: adds space between entries */
 }
+
+
+/* General body styling (optional, if you want to style the whole page) */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  line-height: 1.6;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align items to the top */
+  min-height: 100vh;
+}
+
+/* Container for the whole Pokemon search component */
+.pokemon-search-container {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px; /* Max width for the component */
+  text-align: center; /* Center text content like headings */
+}
+
+/* Form styling */
+.pokemon-search-container form {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Space between input and button */
+}
+
+.pokemon-search-container input[type="text"] {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  flex-grow: 1; /* Allow input to take available space */
+  max-width: 300px;
+}
+
+.pokemon-search-container button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.pokemon-search-container button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Loading and Error messages */
+.pokemon-search-container .loading-message {
+  font-size: 18px;
+  color: #555;
+  margin-top: 20px;
+}
+
+.pokemon-search-container .error-message {
+  font-size: 18px;
+  color: #d9534f; /* Bootstrap's danger color */
+  background-color: #f2dede;
+  border: 1px solid #ebccd1;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+/* Pokemon data display area */
+.pokemon-data {
+  margin-top: 25px;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  text-align: left; /* Align text to the left within this box */
+}
+
+.pokemon-data h1 {
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 10px;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.pokemon-data img {
+  display: block;
+  margin: 0 auto 20px auto; /* Center the image and add space below */
+  width: 120px; /* Adjust size as needed */
+  height: 120px;
+  background-color: #e9ecef; /* Light background for the image box */
+  border-radius: 50%; /* Circular image */
+  padding: 10px;
+  border: 2px solid #dee2e6;
+}
+
+.pokemon-data h2 {
+  color: #007bff;
+  font-size: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+}
+
+.pokemon-data ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.pokemon-data li {
+  background-color: #fff;
+  border: 1px solid #eee;
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+.pokemon-data li:nth-child(odd) {
+  background-color: #f8f9fa; /* Slightly different background for odd items */
+}
+
+.pokemon-data p {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.pokemon-data p strong {
+  color: #495057;
+}
