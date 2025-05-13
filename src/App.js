@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-
+import './components/image'
+import Gallery from './components/image';
 function App() {
   
   return (
@@ -11,7 +12,7 @@ function App() {
           Edit <code>src/App.js</code> and save to reload.
         </p>
         
-
+        <Gallery/>
 
 
         <a

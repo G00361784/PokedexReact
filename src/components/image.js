@@ -7,7 +7,7 @@ function Profile() {
     );
   }
   
-  export default function Gallery() {
+  function Gallery() {
     return (
       <section>
         <h1>Amazing scientists</h1>
@@ -18,3 +18,4 @@ function Profile() {
     );
   }
   
+  export default Gallery
