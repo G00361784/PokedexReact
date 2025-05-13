@@ -1,90 +1,66 @@
-// src/components/PokemonEntry.js
-import React from 'react';
-import PropTypes from 'prop-types';
-import './pokemonEntry.css'; // We'll create this for styling
+import React, { useState, useEffect } from 'react';
 
-const PokemonEntry = ({ pokemon }) => {
-  if (!pokemon) {
-    return <div className="pokemon-entry-empty">No Pokémon data provided.</div>;
+function DittoInfoFetch() {
+  const [dittoData, setDittoData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchDittoData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const response = await fetch('https://pokeapi.co/api/v2/pokemon/ditto');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setDittoData(data);
+      } catch (error) {
+        setError(error.message);
+        setDittoData(null); // Clear any old data
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDittoData();
+  }, []); // Empty dependency array means this effect runs once when the component mounts
+
+  if (loading) {
+    return <p>Loading Ditto's information...</p>;
   }
 
-  const { id, name, imageUrl, types, height, weight, description } = pokemon;
+  if (error) {
+    return <p>Error fetching Ditto's data: {error}</p>;
+  }
 
-  // Helper function to format the Pokedex ID (e.g., 1 -> #001)
-  const formatPokedexId = (pokedexId) => {
-    return `#${String(pokedexId).padStart(3, '0')}`;
-  };
+  if (!dittoData) {
+    return <p>No data found for Ditto.</p>;
+  }
 
   return (
-    <article className="pokemon-entry" aria-labelledby={`pokemon-name-${id}`}>
-      <div className="pokemon-entry-header">
-        <h2 id={`pokemon-name-${id}`} className="pokemon-name">
-          {name}
-        </h2>
-        <span className="pokemon-id">{formatPokedexId(id)}</span>
-      </div>
-
-      <div className="pokemon-entry-content">
-        <div className="pokemon-image-container">
-          {imageUrl ? (
-            <img src={imageUrl} alt={name} className="pokemon-image" />
-          ) : (
-            <div className="pokemon-image-placeholder">No Image</div>
-          )}
-        </div>
-
-        <div className="pokemon-details">
-          <section className="pokemon-types">
-            <h3>Type(s)</h3>
-            <ul className="types-list">
-              {types && types.length > 0 ? (
-                types.map((type) => (
-                  <li key={type} className={`type-badge type-${type.toLowerCase()}`}>
-                    {type}
-                  </li>
-                ))
-              ) : (
-                <li>Unknown</li>
-              )}
-            </ul>
-          </section>
-
-          <section className="pokemon-measurements">
-            <h3>Measurements</h3>
-            <p>
-              <strong>Height:</strong> {height !== undefined ? `${height} m` : 'N/A'}
-            </p>
-            <p>
-              <strong>Weight:</strong> {weight !== undefined ? `${weight} kg` : 'N/A'}
-            </p>
-          </section>
-
-          {description && (
-            <section className="pokemon-description">
-              <h3>Description</h3>
-              <p>{description}</p>
-            </section>
-          )}
-        </div>
-      </div>
-    </article>
+    <div>
+      <h1>{dittoData.name.charAt(0).toUpperCase() + dittoData.name.slice(1)}</h1>
+      <img src={dittoData.sprites.front_default} alt={`Sprite of ${dittoData.name}`} />
+      <h2>Abilities:</h2>
+      <ul>
+        {dittoData.abilities.map((abilityObj, index) => (
+          <li key={index}>{abilityObj.ability.name}</li>
+        ))}
+      </ul>
+      <p><strong>Height:</strong> {dittoData.height / 10} m</p> {/* Height is in decimetres */}
+      <p><strong>Weight:</strong> {dittoData.weight / 10} kg</p> {/* Weight is in hectograms */}
+      <h2>Base Stats:</h2>
+      <ul>
+        {dittoData.stats.map((statObj, index) => (
+          <li key={index}>
+            {statObj.stat.name}: {statObj.base_stat}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
-};
+}
 
-PokemonEntry.propTypes = {
-  pokemon: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    imageUrl: PropTypes.string,
-    types: PropTypes.arrayOf(PropTypes.string).isRequired,
-    height: PropTypes.number,
-    weight: PropTypes.number,
-    description: PropTypes.string,
-  }),
-};
-
-PokemonEntry.defaultProps = {
-  pokemon: null,
-};
-
-export default PokemonEntry;
+export default DittoInfoFetch;
